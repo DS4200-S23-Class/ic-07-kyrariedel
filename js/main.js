@@ -1,5 +1,5 @@
-const FRAME_HEIGHT = 200;
-const FRAME_WIDTH = 500;
+const FRAME_HEIGHT = 500;
+const FRAME_WIDTH = 200;
 const MARGINS = {left: 50, right: 50, top: 50, bottom: 50};
 
 const data = [55000, 48000, 27000, 66000, 90000]
@@ -17,20 +17,20 @@ FRAME.selectAll("points")
 		.data(data) //assigns data to value in data1
 		.enter(); // automatically loops through
 
-const MAX_X = d3.max(data, (d) => { return d; }); 
-console.log("Max x: " + MAX_X);  
+const MAX_Y = d3.max(data, (d) => { return d; }); 
+console.log("Max Y: " + MAX_Y);  
 
-const X_SCALE = d3.scaleLinear() // linear scale because we have 
+const Y_SCALE = d3.scaleLinear() // linear scale because we have 
                               // linear data 
-                  .domain([0, (MAX_X + 10000)]) // add some padding  
+                  .domain([0, (MAX_Y + 10000)]) // add some padding  
                   .range([0, VIS_WIDTH]); 
 
 FRAME.selectAll("points")  
     .data(data)  
     .enter()       
     .append("circle")  
-      .attr("cx", (d) => { return (X_SCALE(d) + MARGINS.left); }) 
-      .attr("cy", MARGINS.top) 
+      .attr("cx",  MARGINS.left) 
+      .attr("cy", (d) => { return (Y_SCALE(d) + MARGINS.left);}) 
       .attr("r", 20)
       .attr("class", "point"); 
 
@@ -39,7 +39,7 @@ FRAME.append("g") // g is a "placeholder" svg
       .attr("transform", "translate(" + MARGINS.left + 
             "," + (VIS_HEIGHT + MARGINS.top) + ")") //moves axis 
                                                     // within margins 
-      .call(d3.axisBottom(X_SCALE).ticks(5)) // function for generating axis  
+      .call(d3.axisLeft(Y_SCALE).ticks(4)) // function for generating axis  
         .attr("font-size", '20px'); // set font size
 
 				
